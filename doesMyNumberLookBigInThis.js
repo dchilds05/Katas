@@ -23,3 +23,13 @@ function narcissistic(value) {
     if(sum === value) return true;
     else return false;
   }
+
+function narcissistic(value) {
+  let length = String(value).length
+  let sum = 0;
+  for (let i = 0; i < length; i++){
+    sum += Math.pow(Number(String(value)[i]),length)
+  }
+  if (sum === value) return true
+  else return false
+}
