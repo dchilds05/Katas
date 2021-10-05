@@ -12,9 +12,11 @@ Examples
 
 function digital_root(n) {
     if(n < 10) return n
+
     let arr = String(n).split("");
     let sum = arr.reduce((sum, el) => {
       return sum + Number(el);
     }, 0);
+    
     return digital_root(sum);
   }
