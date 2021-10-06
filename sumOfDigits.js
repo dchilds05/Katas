@@ -17,6 +17,6 @@ function digital_root(n) {
     let sum = arr.reduce((sum, el) => {
       return sum + Number(el);
     }, 0);
-    
+
     return digital_root(sum);
   }
