@@ -20,6 +20,8 @@ Player 1 starts the game every time and alternates with player 2.
 The columns are numbered 0-6 left to right.
 */
 
+/*
+//WORKING SOLUTION
 class Connect4{
   
     constructor() {
@@ -51,28 +53,52 @@ class Connect4{
         }
       }
   
-      //CHECK FOR WINNER
-      let [vChecker1, vChecker2, hChecker1, hChecker2] = [0,0,0,0];
+      //CHECK FOR WINNER VERTICAL AND HORIZONTAL
+      let [vChecker, hChecker] = ["",""];
       for (let i = 0; i < 6; i++){
-        if(this.board[i][col] === 1) vChecker1++;
-        if(this.board[i][col] === 2) vChecker2++;
+        vChecker += `${this.board[i][col].toString()}`;
       }
       for (let i = 0; i < 7; i++){
-          if(this.board[currentRow][i] === 1) hChecker1++;
-          if(this.board[currentRow][i] === 2) hChecker2++;
+        hChecker += `${this.board[currentRow][i].toString()}`;
       }
-      if (vChecker1 >= 4 || vChecker2 >= 4 || hChecker1 >= 4 || hChecker2 >= 4) {
-          this.gameFinished = true;
-          return `Player ${this.n} wins!`;
-      }
-      if ((this.board[currentRow-1][col+1] === this.n && this.board[currentRow-2][col+2] === this.n && this.board[currentRow-3][col+3] === this.n) ||
-        (this.board[currentRow+1][col-1] === this.n && this.board[currentRow+2][col-2] === this.n && this.board[currentRow+3][col-3] === this.n) ||
-        (this.board[currentRow+1][col+1] === this.n && this.board[currentRow+2][col+2] === this.n && this.board[currentRow+3][col+3] === this.n) ||
-        (this.board[currentRow-1][col-1] === this.n && this.board[currentRow-2][col-2] === this.n && this.board[currentRow-3][col-3] === this.n)) 
-        {
+      if (vChecker.includes("1111") || vChecker.includes("2222") || hChecker.includes("1111") || hChecker.includes("2222")) {
         this.gameFinished = true;
         return `Player ${this.n} wins!`;
+      }
+
+      //CHECK FOR WINNER DIAGONAL
+      if(this.board[currentRow-1] && this.board[currentRow-2] && this.board[currentRow-3]){
+        if (this.board[currentRow-1][col+1] === this.n && this.board[currentRow-2][col+2] === this.n && this.board[currentRow-3][col+3] === this.n)
+            {
+            this.gameFinished = true;
+            return `Player ${this.n} wins!`;
+            }
         }
+
+      if(this.board[currentRow+1] && this.board[currentRow+2] && this.board[currentRow+3]){
+        if (this.board[currentRow+1][col-1] === this.n && this.board[currentRow+2][col-2] === this.n && this.board[currentRow+3][col-3] === this.n)
+            {
+            this.gameFinished = true;
+            return `Player ${this.n} wins!`;
+            }
+    }
+
+      if(this.board[currentRow+1] && this.board[currentRow+2] && this.board[currentRow+3]){
+        if (this.board[currentRow+1][col+1] === this.n && this.board[currentRow+2][col+2] === this.n && this.board[currentRow+3][col+3] === this.n)
+            {
+            this.gameFinished = true;
+            return `Player ${this.n} wins!`;
+            }
+    }
+
+      if(this.board[currentRow-1] && this.board[currentRow-2] && this.board[currentRow-3]){
+        if (this.board[currentRow-1][col-1] === this.n && this.board[currentRow-2][col-2] === this.n && this.board[currentRow-3][col-3] === this.n)
+            {
+            this.gameFinished = true;
+            return `Player ${this.n} wins!`;
+            }
+        }
+
   
       //ADJUST CURRENT AND NEXT PLAYER
       if (this.n === 1) {
@@ -85,6 +111,111 @@ class Connect4{
       }
   
       //RETURN WHO JUST HAD TURN
+      return `Player ${this.hadTurn} has a turn`;
+    };
+  };
+*/
+
+//CLEANER SOLUTION, NEEDS DEBUGGING
+
+class Connect4{
+  
+    constructor() {
+      this.gameFinished = false;
+      this.n = 1;
+      this.hadTurn = "1";
+      this.currentRow = 0;
+      this.col = 0;
+      this.board = [
+        [0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0]
+      ];
+    }
+
+    move(){
+        for(let i = 5; i >= 0; i--){
+            if(i === 0 && this.board[i][this.col] !== 0) return "Column full!"
+            if(this.board[i][this.col] === 0) {
+            this.board[i][this.col] = this.n;
+            this.currentRow = i;
+            break;
+            }
+        }
+    }
+
+    checkWinnerVerticalHorizontal(){
+        let [vChecker, hChecker] = ["",""];
+        for (let i = 0; i < 6; i++){
+            vChecker += `${this.board[i][this.col].toString()}`;
+        }
+        for (let i = 0; i < 7; i++){
+            hChecker += `${this.board[this.currentRow][i].toString()}`;
+        }
+        if (vChecker.includes("1111") || vChecker.includes("2222") || hChecker.includes("1111") || hChecker.includes("2222")) {
+            this.gameFinished = true;
+            return `Player ${this.n} wins!`;
+        }
+    }
+
+    checkWinnerDiagonal(){
+        if(this.board[this.currentRow-1] && this.board[this.currentRow-2] && this.board[this.currentRow-3]){
+            if (this.board[this.currentRow-1][this.col+1] === this.n && this.board[this.currentRow-2][this.col+2] === this.n && this.board[this.currentRow-3][this.col+3] === this.n)
+                {
+                this.gameFinished = true;
+                return `Player ${this.n} wins!`;
+                }
+            }
+    
+        if(this.board[this.currentRow+1] && this.board[this.currentRow+2] && this.board[this.currentRow+3]){
+            if (this.board[this.currentRow+1][this.col-1] === this.n && this.board[this.currentRow+2][this.col-2] === this.n && this.board[this.currentRow+3][this.col-3] === this.n)
+                {
+                this.gameFinished = true;
+                return `Player ${this.n} wins!`;
+                }
+        }
+    
+        if(this.board[this.currentRow+1] && this.board[this.currentRow+2] && this.board[this.currentRow+3]){
+            if (this.board[this.currentRow+1][this.col+1] === this.n && this.board[this.currentRow+2][this.col+2] === this.n && this.board[this.currentRow+3][this.col+3] === this.n)
+                {
+                this.gameFinished = true;
+                return `Player ${this.n} wins!`;
+                }
+        }
+    
+        if(this.board[this.currentRow-1] && this.board[this.currentRow-2] && this.board[this.currentRow-3]){
+            if (this.board[this.currentRow-1][this.col-1] === this.n && this.board[this.currentRow-2][this.col-2] === this.n && this.board[this.currentRow-3][this.col-3] === this.n)
+                {
+                this.gameFinished = true;
+                return `Player ${this.n} wins!`;
+                }
+            }
+    }
+
+    adjustPlayers(){
+        if (this.n === 1) {
+            this.n = 2;
+            this.hadTurn = "1";
+        }
+        else {
+            this.n = 1;
+            this.hadTurn = "2";
+        }
+    }
+    
+    play(col) {
+      this.col = col;
+
+      if(this.gameFinished === true) return "Game has finished!";
+  
+      this.move();
+      this.checkWinnerVerticalHorizontal();
+      this.checkWinnerDiagonal();
+      this.adjustPlayers();
+      
       return `Player ${this.hadTurn} has a turn`;
     };
   };
