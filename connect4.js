@@ -41,12 +41,12 @@ class Connect4{
       if(this.gameFinished === true) return "Game has finished!";
   
       //CHECK FOR FULL COLUMN, PLAYER TAKES SPACE ON BOARD
-      let rowMarker = 0;
+      let currentRow = 0;
       for(let i = 5; i >= 0; i--){
         if(i === 0 && this.board[i][col] !== 0) return "Column full!"
         if(this.board[i][col] === 0) {
           this.board[i][col] = this.n;
-          rowMarker = i;
+          currentRow = i;
           break;
         }
       }
@@ -58,13 +58,21 @@ class Connect4{
         if(this.board[i][col] === 2) vChecker2++;
       }
       for (let i = 0; i < 7; i++){
-          if(this.board[rowMarker][i] === 1) hChecker1++;
-          if(this.board[rowMarker][i] === 2) hChecker2++;
+          if(this.board[currentRow][i] === 1) hChecker1++;
+          if(this.board[currentRow][i] === 2) hChecker2++;
       }
       if (vChecker1 >= 4 || vChecker2 >= 4 || hChecker1 >= 4 || hChecker2 >= 4) {
           this.gameFinished = true;
           return `Player ${this.n} wins!`;
       }
+      if ((this.board[currentRow-1][col+1] === this.n && this.board[currentRow-2][col+2] === this.n && this.board[currentRow-3][col+3] === this.n) ||
+        (this.board[currentRow+1][col-1] === this.n && this.board[currentRow+2][col-2] === this.n && this.board[currentRow+3][col-3] === this.n) ||
+        (this.board[currentRow+1][col+1] === this.n && this.board[currentRow+2][col+2] === this.n && this.board[currentRow+3][col+3] === this.n) ||
+        (this.board[currentRow-1][col-1] === this.n && this.board[currentRow-2][col-2] === this.n && this.board[currentRow-3][col-3] === this.n)) 
+        {
+        this.gameFinished = true;
+        return `Player ${this.n} wins!`;
+        }
   
       //ADJUST CURRENT AND NEXT PLAYER
       if (this.n === 1) {
