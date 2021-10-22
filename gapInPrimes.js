@@ -31,6 +31,8 @@ gap(4, 130, 200) --> [163, 167] or (163, 167) or {163, 167}
 gap(6,100,110) --> nil or {0, 0} or ... : between 100 and 110 we have 101, 103, 107, 109 but 101-107is not a 6-gap because there is 103in between and 103-109is not a 6-gap because there is 107in between.
 
 You can see more examples of return in Sample Tests.
+
+adding first extra line
 */
 
 
