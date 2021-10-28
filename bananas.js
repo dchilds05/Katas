@@ -44,6 +44,7 @@ var bananas = function(str) {
         console.log("sCopy:",sCopy,"\n");
         let tempStr = "";
         let bananaIndex = 0;
+        let backIndex = 5;
         
         // DURING EACH ITERATION, LOOP THROUGH THE WORD TO CHECK FOR "BANANA"
         for(let i = 0; i < sCopy.length; i++){
@@ -52,16 +53,13 @@ var bananas = function(str) {
               tempStr += sCopy[i];
               bananaIndex++;
           }
-          else tempStr += "-";
+          else if (sCopy.length > tempStr.length) tempStr += "-";
 
-        // ONCE YOU HAVE A FULL "BANANA", PUSH THIS INTO THERESULTS ARRAY
+        // ONCE YOU HAVE A FULL "BANANA", PUSH THIS INTO THE RESULTS ARRAY
           if(bananaIndex === 6){
               if(sCopy.length-tempStr.length > 0) for(let j = 0; j <= sCopy.length-tempStr.length; j++) tempStr += "-";
               if(!results.includes(tempStr)) results.push(tempStr);
-              bananaIndex = 0;
-              tempStr = "";
               console.log("pushed into results:",results,"\n");
-              break;
           }
         }
       
