@@ -33,7 +33,7 @@ var bananas = function(str) {
   
     console.log("str",str,"\n");
 
-    // LOOP THROUGH WORD, REMOVING ONELETTER AT A TIME AND REPLACING WITH DASH
+    // LOOP THROUGH WORD, REMOVING ONELETTER AT A TIME AND REPLACING WITH DASH. WE WILL START AT -1 IN ORDER TO RUN 1 LOOP WITH NO STRING ALTERATIONS.
     for(let x = -1; x < sCopy.length; x++){
       console.log("x:",x);
         if(x > -1) {
@@ -56,7 +56,7 @@ var bananas = function(str) {
 
         // ONCE YOU HAVE A FULL "BANANA", PUSH THIS INTO THERESULTS ARRAY
           if(bananaIndex === 6){
-              if(sCopy.length-tempStr.length > 0) for(let i = 0; i <= sCopy.length-tempStr.length; i++) tempStr += "-";
+              if(sCopy.length-tempStr.length > 0) for(let j = 0; j <= sCopy.length-tempStr.length; j++) tempStr += "-";
               if(!results.includes(tempStr)) results.push(tempStr);
               bananaIndex = 0;
               tempStr = "";
