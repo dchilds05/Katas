@@ -49,6 +49,7 @@ function gap(g, m, n) {
     
     for(let i = 2; i < Math.sqrt(n); i++){
       if(primes[i] === 1){
+        //DELETE ALL MULTIPLES OF i UP UNTIL n
         for(let j = 2; i * j <= n; j++){
           primes[i*j] = 0;
         }
@@ -56,15 +57,10 @@ function gap(g, m, n) {
     }
     
     // CHECK FOR DESIRED DIFFERENCE BETWEEN VALID PRIME INDEX VALUES
-    let flag = false;
-    let counter = 0;
+    let counter = -1;
     for(let i = m; i <= n; i++){
       counter++;
-      if((primes[i] === 1)){
-        if(flag === true && counter === g) return [i-g,i];
-        flag = true;
-        counter = 0;
-      }
+      if(counter >= g && primes[i] === 1 && primes[i-g] === 1) return [i-g,i];
     }
     
     // ELSE, RETURN NULL
