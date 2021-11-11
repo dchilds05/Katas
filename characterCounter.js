@@ -12,9 +12,15 @@ Examples
 */
 
 function validateWord(s){
+  
+    // PUT CHARS IN ORDER, SO DUPLICATES ARE PAIRED
     let arr = s.split("").sort();
+
+    //INITIATE A MAP FOR COUNTING DUPLICATES OF EACH CHARACTER
     let count = [1];
     let j = 0;
+
+    //COUNT DUPLICATES OF EACH CHARACTER
     for(let i = 1; i < s.length; i++){
       if(arr[i].toLowerCase() === arr[i-1].toLowerCase()) count[j]++;
       else {
@@ -22,6 +28,8 @@ function validateWord(s){
         count[j] = 1;
       }
     }
+
+    // IF ALL COUNTS ARE THE SAME, TRUE
     for(let i = 1; i < count.length; i++) if(count[i] !== count[i-1]) return false;
     return true;
   }
