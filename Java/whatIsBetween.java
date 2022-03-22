@@ -8,7 +8,7 @@ b = 4
 --> [1, 2, 3, 4]
 */
 
-public class Kata {
+public class whatIsBetween {
 
   public static int[] between(int a, int b) {
     int size = b-a+1;
