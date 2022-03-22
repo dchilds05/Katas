@@ -31,6 +31,7 @@ var minDeletions = function(s) {
     let char = arr[0];
     let record = [];
     
+    // CREATE A RECORD OF OCCURENCES OF EACH LETTER
     for(let i = 0; i < arr.length; i++){
         if(arr[i] === char) count++;
         else {
@@ -42,13 +43,13 @@ var minDeletions = function(s) {
     }
     
     record.sort((a,b) => b-a);
-    console.log(record);
     
+    // ENSURE THAT NO NUMBER IN THE RECORD REPEATES
     let rmCount = 0;
     for(let i = 1; i < record.length; i++){
         while(record[i] >= record[i-1]){
             record[i] = record[i]-1;
-            rmCount++;
+            if(record[i] >= 0) rmCount++;
         }
     }
     
