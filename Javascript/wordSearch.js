@@ -20,6 +20,11 @@ let visitedNodes = [];
 let tempString = "";
 
 var exist = function(board, word) {
+    // Make sure all of the letters in word exist in matrix
+    for(let i = 0; i < word.length; i++){
+        if(!JSON.stringify(board).includes(word[i])) return false;
+    }
+    
     if(board == null || word == null) return false;
     for(let y = 0; y < board.length; y++){
         for(let x = 0; x < board[0].length; x++){
@@ -33,9 +38,15 @@ var exist = function(board, word) {
 
 function checkNode(y,x,board,word){
     
+    console.log(tempString);
     tempString += board[y][x];
+    console.log(tempString);
     if(tempString == word) return true;
     visitedNodes.push([y,x]);
+
+    for(let i = 0; i < tempString.length; i++){
+        if(tempString[i] != word[i]) return false;
+    }
     
     // check right
     if(board[0][x+1] && !contains(visitedNodes,[y,x+1])){
